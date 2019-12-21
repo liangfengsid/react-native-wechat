@@ -402,7 +402,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         return ret;
     }
 
-    private WXMiniProgramObject _jsonToMiniProgramMedia(ReadableMap data) {
+    private WXMiniProgramObject __jsonToMiniProgramMedia(ReadableMap data) {
         if (!data.hasKey("userName")) {
             return null;
         }
