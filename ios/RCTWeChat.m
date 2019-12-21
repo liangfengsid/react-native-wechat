@@ -302,11 +302,11 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
           miniProgramObject.path = path;
           miniProgramObject.withShareTicket = withShareTicket;
           if ([miniprogramType isEqualToString:@"release"]) {
-              miniProgramObject.miniprogramType = 0;
+              miniProgramObject.miniprogramType = WXMiniProgramTypeRelease;
           } else if ([miniprogramType isEqualToString:@"test"]) {
-              miniProgramObject.miniprogramType = 1;
+              miniProgramObject.miniprogramType = WXMiniProgramTypeTest;
           } else if ([miniprogramType isEqualToString:@"preview"]) {
-              miniProgramObject.miniprogramType = 2;
+              miniProgramObject.miniprogramType = WXMiniProgramTypePreview;
           }
 
           [self shareToWeixinWithMediaMessage:aScene

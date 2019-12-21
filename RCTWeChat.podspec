@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/yorkie/react-native-wechat"
   s.license      = "MIT"
   s.platform     = :ios, "9.0"
-  s.source       = { :git => "https://github.com/yorkie/react-native-wechat.git", :tag => "master" }
+  s.source       = { :git => "https://github.com/liangfengsid/react-native-wechat.git", :tag => "master" }
   s.source_files  = "ios/*.{h,m}"
   s.dependency "React"
   s.vendored_libraries = "ios/libWeChatSDK.a"
