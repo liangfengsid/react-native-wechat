@@ -70,7 +70,7 @@ export default class App extends Component {
   }
   async componentDidMount() {
     try {
-      WeChat.registerApp('your wexin AppID'); // Replace with your AppID
+      WeChat.registerApp('your wexin AppID', 'your universal link'); // Replace with your AppID
       this.setState({
         apiVersion: await WeChat.getApiVersion(),
         wxAppInstallUrl: Platform.OS === 'ios' ? await WeChat.getWXAppInstallUrl(): null,
