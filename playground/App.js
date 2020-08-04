@@ -40,7 +40,6 @@ export default class App extends Component {
       apiVersion: null,
       isWXAppInstalled: false,
       wxAppInstallUrl: null,
-      isWXAppSupportApi: false
     }
   }
   handleOpenApp () {
@@ -74,7 +73,6 @@ export default class App extends Component {
       this.setState({
         apiVersion: await WeChat.getApiVersion(),
         wxAppInstallUrl: Platform.OS === 'ios' ? await WeChat.getWXAppInstallUrl(): null,
-        isWXAppSupportApi: await WeChat.isWXAppSupportApi(),
         isWXAppInstalled: await WeChat.isWXAppInstalled()
       });
     } catch (e) {

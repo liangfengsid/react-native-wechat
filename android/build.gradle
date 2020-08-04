@@ -28,6 +28,6 @@ allprojects {
 
 dependencies {
   api 'com.facebook.react:react-native:+'
-  // api files('libs/libammsdk.jar')
-  api files('libs/wechat-sdk-android-without-mta-5.5.8.jar')
+  // api files('libs/wechat-sdk-android-without-mta-5.5.8.jar')
+  implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'
 }
