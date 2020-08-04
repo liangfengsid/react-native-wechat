@@ -71,11 +71,6 @@ RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
     callback(@[[NSNull null], @([WXApi isWXAppInstalled])]);
 }
 
-RCT_EXPORT_METHOD(isWXAppSupportApi:(RCTResponseSenderBlock)callback)
-{
-    callback(@[[NSNull null], @([WXApi isWXAppSupportApi])]);
-}
-
 RCT_EXPORT_METHOD(getWXAppInstallUrl:(RCTResponseSenderBlock)callback)
 {
     callback(@[[NSNull null], [WXApi getWXAppInstallUrl]]);
@@ -160,6 +155,12 @@ RCT_EXPORT_METHOD(shareToFavorite:(NSDictionary *)data
                   :(RCTResponseSenderBlock)callback)
 {
     [self shareToWeixinWithData:data scene:WXSceneFavorite callback:callback];
+}
+
+RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data
+                  :(RCTResponseSenderBlock)callback)
+{
+    [self launchMiniProgramWithData:data callback:callback];
 }
 
 RCT_EXPORT_METHOD(pay:(NSDictionary *)data
@@ -385,6 +386,32 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     }];
 }
 
+- (void)launchMiniProgramWithData:(NSDictionary *)aData
+                             callback:(RCTResponseSenderBlock)callback
+{
+    NSString * userName = aData[@"userName"];
+    if (userName.length <= 0) {
+        callback(@[@"userName required"]);
+        return;
+    }
+
+    WXLaunchMiniProgramReq *req = [WXLaunchMiniProgramReq object];
+    req.userName = userName;
+    req.path= aData[@"path"];
+    NSString * miniprogramType = aData[@"miniprogramType"];
+    if ([miniprogramType isEqualToString:@"release"]) {
+        req.miniProgramType = WXMiniProgramTypeRelease;
+    } else if ([miniprogramType isEqualToString:@"test"]) {
+        req.miniProgramType = WXMiniProgramTypeTest;
+    } else if ([miniprogramType isEqualToString:@"preview"]) {
+        req.miniProgramType = WXMiniProgramTypePreview;
+    }
+
+    [WXApi sendReq:req completion:^(BOOL success) {
+        callback(@[success ? [NSNull null] : INVOKE_FAILED]);
+    }];
+}
+
 #pragma mark - wx callback
 
 -(void) onReq:(BaseReq*)req
@@ -424,14 +451,21 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
 	        [self.bridge.eventDispatcher sendDeviceEventWithName:RCTWXEventName body:body];
 	    }
 	} else if ([resp isKindOfClass:[PayResp class]]) {
-	        PayResp *r = (PayResp *)resp;
-	        NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
-	        body[@"errStr"] = r.errStr;
-	        body[@"type"] = @(r.type);
-	        body[@"returnKey"] =r.returnKey;
-	        body[@"type"] = @"PayReq.Resp";
-	        [self.bridge.eventDispatcher sendDeviceEventWithName:RCTWXEventName body:body];
-    	}
+      PayResp *r = (PayResp *)resp;
+      NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
+      body[@"errStr"] = r.errStr;
+      body[@"type"] = @(r.type);
+      body[@"returnKey"] =r.returnKey;
+      body[@"type"] = @"PayReq.Resp";
+      [self.bridge.eventDispatcher sendDeviceEventWithName:RCTWXEventName body:body];
+  } else if ([resp isKindOfClass:[WXLaunchMiniProgramResp class]]) {
+      WXLaunchMiniProgramResp *r = (WXLaunchMiniProgramResp *)resp;
+      NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
+      body[@"extMsg"] = r.extMsg;
+      body[@"errStr"] = r.errStr;
+      body[@"type"] = @"WXLaunchMiniProgram.Resp";
+      [self.bridge.eventDispatcher sendDeviceEventWithName:RCTWXEventName body:body];
+  }
 }
 
 @end
