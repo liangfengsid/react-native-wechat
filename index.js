@@ -103,13 +103,6 @@ export const registerApp = wrapRegisterApp(WeChat.registerApp);
 export const isWXAppInstalled = wrapApi(WeChat.isWXAppInstalled);
 
 /**
- * Return if the wechat application supports the api
- * @method isWXAppSupportApi
- * @return {Promise}
- */
-export const isWXAppSupportApi = wrapApi(WeChat.isWXAppSupportApi);
-
-/**
  * Get the wechat app installed url
  * @method getWXAppInstallUrl
  * @return {String} the wechat app installed url
@@ -135,6 +128,7 @@ const nativeShareToTimeline = wrapApi(WeChat.shareToTimeline);
 const nativeShareToSession = wrapApi(WeChat.shareToSession);
 const nativeShareToFavorite = wrapApi(WeChat.shareToFavorite);
 const nativeSendAuthRequest = wrapApi(WeChat.sendAuthRequest);
+const nativeLaunchMiniProgram = wrapApi(WeChat.launchMiniProgram);
 
 /**
  * @method sendAuthRequest
@@ -223,6 +217,27 @@ export function shareToFavorite(data) {
   return new Promise((resolve, reject) => {
     nativeShareToFavorite(data);
     emitter.once('SendMessageToWX.Resp', resp => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
+
+/**
+ * Launch mini program
+ * @method launchMiniProgram
+ * @param {Object} data
+ * @param {String} data.userName - mini program original id.
+ * @param {String} data.path - Page to be opened.
+ * @param {String} data.miniprogramType - open mode: {release|test|preview}.
+ */
+export function launchMiniProgram(data) {
+  return new Promise((resolve, reject) => {
+    nativeLaunchMiniProgram(data);
+    emitter.once('WXLaunchMiniProgram.Resp', resp => {
       if (resp.errCode === 0) {
         resolve(resp);
       } else {

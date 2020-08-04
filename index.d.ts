@@ -1,7 +1,6 @@
 declare module "react-native-wechat" {
   export function registerApp(appId: string, universalLink: string): Promise<boolean>;
   export function isWXAppInstalled(): Promise<boolean>;
-  export function isWXAppSupportApi(): Promise<boolean>;
   export function getApiVersion(): Promise<string>;
   export function openWXApp(): Promise<boolean>;
   export interface AuthResponse {
