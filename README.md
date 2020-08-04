@@ -51,11 +51,6 @@ WeChat.registerApp('appid');
 
 Check if the WeChat app is installed on the device.
 
-#### isWXAppSupportApi()
-
-- returns {Boolean} Contains the result.
-
-Check if wechat support open url.
 
 #### getApiVersion()
 

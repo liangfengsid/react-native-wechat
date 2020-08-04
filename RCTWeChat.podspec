@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   React-Native(iOS/Android) functionalities include WeChat Login, Share, Favorite and Payment {QQ: 336021910}
    DESC
   s.author       = { "yorkie" => "yorkiefixer@gmail.com" }
-  s.homepage     = "https://github.com/yorkie/react-native-wechat"
+  s.homepage     = "https://github.com/liangfengsid/react-native-wechat"
   s.license      = "MIT"
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/liangfengsid/react-native-wechat.git", :tag => "master" }
