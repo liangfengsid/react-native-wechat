@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
@@ -55,6 +57,7 @@ import java.util.UUID;
  * Created by tdzl2_000 on 2015-10-10.
  */
 public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEventHandler {
+    public static final String TAG = "RCTWeChat";
     private String appId;
 
     private IWXAPI api = null;
@@ -251,7 +254,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         }
 
         if (uri != null) {
-            this._getImage(uri, new ResizeOptions(100, 100), new ImageCallback() {
+            this._getImage(uri, null, new ImageCallback() {
                 @Override
                 public void invoke(@Nullable Bitmap bitmap) {
                     WeChatModule.this._share(scene, data, bitmap, callback);
@@ -263,6 +266,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     }
 
     private void _getImage(Uri uri, ResizeOptions resizeOptions, final ImageCallback imageCallback) {
+        Log.i(TAG, "_getImage uri:" +uri.getPath());
         BaseBitmapDataSubscriber dataSubscriber = new BaseBitmapDataSubscriber() {
             @Override
             protected void onNewResultImpl(Bitmap bitmap) {
@@ -281,6 +285,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
 
             @Override
             protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+                Log.i(TAG, "onFailureImpl");
                 imageCallback.invoke(null);
             }
         };
@@ -345,6 +350,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
                 @Override
                 public void invoke(@Nullable WXMediaMessage.IMediaObject mediaObject) {
                     if (mediaObject == null) {
+                        Log.i(TAG, "in _share no mediaObject");
                         callback.invoke(INVALID_ARGUMENT);
                     } else {
                         WeChatModule.this._share(scene, data, thumbImage, mediaObject, callback);
@@ -475,6 +481,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         this._getImage(imageUri, null, new ImageCallback() {
             @Override
             public void invoke(@Nullable Bitmap bitmap) {
+                Log.i(TAG, "_getImage, bitmap is null? : "+(bitmap==null));
                 callback.invoke(bitmap == null ? null : new WXImageObject(bitmap));
             }
         });
@@ -491,6 +498,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
 
     private void __jsonToImageFileMedia(ReadableMap data, MediaObjectCallback callback) {
         if (!data.hasKey("imageUrl")) {
+            Log.i(TAG, "in __jsonToImageFileMedia");
             callback.invoke(null);
             return;
         }

@@ -6,6 +6,9 @@
 //  Copyright © 2015 WeFlex. All rights reserved.
 //
 
+#ifndef RCTWeChat_h
+#define RCTWeChat_h
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -37,3 +40,5 @@
 @property NSString* appId;
 
 @end
+
+#endif /* RCTWeChat_h */

@@ -19,6 +19,8 @@ public class WeChatPackage implements ReactPackage {
         return Arrays.asList(new NativeModule[]{
             // Modules from third-party
             new WeChatModule(reactContext),
+                new DingdingModule(reactContext),
+                new QQModule(reactContext),
         });
     }
 

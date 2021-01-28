@@ -4,7 +4,9 @@ import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
 import { EventEmitter } from 'events';
 
 let isAppRegistered = false;
-const { WeChat } = NativeModules;
+let isDingdingRegistered = false;
+let isQQRegistered = false
+const { WeChat, Dingding, QQ } = NativeModules;
 
 // Event emitter to dispatch request and response from WeChat.
 const emitter = new EventEmitter();
@@ -40,6 +42,60 @@ function wrapRegisterApp(nativeFunc) {
   };
 }
 
+function wrapRegisterDingdingApp(nativeFunc) {
+  if (!nativeFunc) {
+    return undefined;
+  }
+  return (...args) => {
+    if (isDingdingRegistered) {
+      // FIXME(Yorkie): we ignore this error if AppRegistered is true.
+      return Promise.resolve(true);
+    }
+    isDingdingRegistered = true;
+    return new Promise((resolve, reject) => {
+      nativeFunc.apply(null, [
+        ...args,
+        (error, result) => {
+          if (!error) {
+            return resolve(result);
+          }
+          if (typeof error === 'string') {
+            return reject(new Error(error));
+          }
+          reject(error);
+        },
+      ]);
+    });
+  };
+}
+
+function wrapRegisterQQApp(nativeFunc) {
+  if (!nativeFunc) {
+    return undefined;
+  }
+  return (...args) => {
+    if (isQQRegistered) {
+      // FIXME(Yorkie): we ignore this error if AppRegistered is true.
+      return Promise.resolve(true);
+    }
+    isQQRegistered = true;
+    return new Promise((resolve, reject) => {
+      nativeFunc.apply(null, [
+        ...args,
+        (error, result) => {
+          if (!error) {
+            return resolve(result);
+          }
+          if (typeof error === 'string') {
+            return reject(new Error(error));
+          }
+          reject(error);
+        },
+      ]);
+    });
+  };
+}
+
 function wrapApi(nativeFunc) {
   if (!nativeFunc) {
     return undefined;
@@ -47,6 +103,56 @@ function wrapApi(nativeFunc) {
   return (...args) => {
     if (!isAppRegistered) {
       return Promise.reject(new Error('registerApp required.'));
+    }
+    return new Promise((resolve, reject) => {
+      nativeFunc.apply(null, [
+        ...args,
+        (error, result) => {
+          if (!error) {
+            return resolve(result);
+          }
+          if (typeof error === 'string') {
+            return reject(new Error(error));
+          }
+          reject(error);
+        },
+      ]);
+    });
+  };
+}
+
+function wrapDingdingApi(nativeFunc) {
+  if (!nativeFunc) {
+    return undefined;
+  }
+  return (...args) => {
+    if (!isDingdingRegistered) {
+      return Promise.reject(new Error('registerDingdingApp required.'));
+    }
+    return new Promise((resolve, reject) => {
+      nativeFunc.apply(null, [
+        ...args,
+        (error, result) => {
+          if (!error) {
+            return resolve(result);
+          }
+          if (typeof error === 'string') {
+            return reject(new Error(error));
+          }
+          reject(error);
+        },
+      ]);
+    });
+  };
+}
+
+function wrapQQApi(nativeFunc) {
+  if (!nativeFunc) {
+    return undefined;
+  }
+  return (...args) => {
+    if (!isQQRegistered) {
+      return Promise.reject(new Error('registerQQApp required.'));
     }
     return new Promise((resolve, reject) => {
       nativeFunc.apply(null, [
@@ -129,6 +235,30 @@ const nativeShareToSession = wrapApi(WeChat.shareToSession);
 const nativeShareToFavorite = wrapApi(WeChat.shareToFavorite);
 const nativeSendAuthRequest = wrapApi(WeChat.sendAuthRequest);
 const nativeLaunchMiniProgram = wrapApi(WeChat.launchMiniProgram);
+
+/**
+ * @method registerDingdingApp
+ * @param {String} appid - the app id
+ * @return {Promise}
+ */
+export const registerDingdingApp = wrapRegisterDingdingApp(Dingding.registerDingdingApp);
+/**
+ * Return if the dingding app is installed and shareing is available in the device.
+ * @method isDingdingShareAvalable
+ * @return {Promise}
+ */
+export const isDingdingShareAvalable = wrapDingdingApi(Dingding.isDingdingShareAvalable);
+const nativeShareToDingding = wrapDingdingApi(Dingding.share)
+
+
+export const registerQQApp = wrapRegisterQQApp(QQ.registerQQApp);
+/**
+ * Return if the dingding app is installed and shareing is available in the device.
+ * @method isDingdingShareAvalable
+ * @return {Promise}
+ */
+export const isQQAppInstalled = wrapQQApi(QQ.isQQAppInstalled);
+const nativeShareToQQ = wrapQQApi(QQ.share)
 
 /**
  * @method sendAuthRequest
@@ -238,6 +368,47 @@ export function launchMiniProgram(data) {
   return new Promise((resolve, reject) => {
     nativeLaunchMiniProgram(data);
     emitter.once('WXLaunchMiniProgram.Resp', resp => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
+
+/**
+ * ShareImageToDingding
+ * @method shareToDingding
+ * @param {Object} data
+ * @param {String} data.imagePath - local image path
+ */
+export function shareToDingding(data) {
+  return new Promise((resolve, reject) => {
+    nativeShareToDingding(data);
+    emitter.once('SendMessageToDD.Resp', resp => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
+
+/**
+ * ShareImageToQQ
+ * @method shareToQQ
+ * @param {Object} data
+ * @param {String} data.type - photo or audio
+ * @param {String} data.title - title
+ * @param {String} data.appName - app name
+ * @param {String} data.path - local file path
+ */
+export function shareToQQ(data) {
+  return new Promise((resolve, reject) => {
+    nativeShareToQQ(data);
+    emitter.once('SendMessageToQQ.Resp', resp => {
       if (resp.errCode === 0) {
         resolve(resp);
       } else {

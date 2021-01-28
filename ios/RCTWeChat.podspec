@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RCTWeChat"
-  s.version      = "0.1.0"
+  s.version      = "1.9.14"
   s.summary      = "React-Native(iOS/Android) functionalities include WeChat Login, Share, Favorite and Payment {QQ: 336021910}"
 
   # This description is used to generate tags and improve search results.
@@ -25,13 +25,14 @@ Pod::Spec.new do |s|
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "weflex" => "336021910@qq.com" }
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/weflex/react-native-wechat.git", :tag => "master" }
+  s.source       = { :git => "https://github.com/liangfengsid/react-native-wechat.git", :tag => "master" }
   s.source_files  = "**/*.{h,m}"
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   s.dependency "React"
   s.vendored_libraries = "libWeChatSDK.a"
+  s.vendored_frameworks = "TencentOpenAPI.framework","DTShareKit.framework"
   s.ios.frameworks = 'SystemConfiguration','CoreTelephony','XCTest'
   s.ios.library = 'sqlite3','c++','z'
 
