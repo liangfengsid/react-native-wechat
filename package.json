@@ -1,29 +1,39 @@
 {
-  "name": "rn-wechat-mini",
-  "version": "1.0.6",
-  "description": "react-native library for wechat app",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/liangfengsid/react-native-wechat.git"
-  },
-  "keywords": [
-    "wechat",
-    "react",
-    "react-native",
-    "react-component",
-    "ios"
+  "_args": [
+    [
+      "rn-wechat-mini@1.0.6",
+      "/Users/liangfengsid/github/Shutong"
+    ]
   ],
-  "dependencies": {
-    "events": "1.0.2"
+  "_from": "rn-wechat-mini@1.0.6",
+  "_id": "rn-wechat-mini@1.0.6",
+  "_inBundle": false,
+  "_integrity": "sha512-m/eOxGLMRdr4tmH+RZPNHW7TT6XIWJkUC7TmBbux42SXevKmJy/V3vT0pHK6jQNPB6Ve6S4DbsubuvlSvkeLDw==",
+  "_location": "/rn-wechat-mini",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "rn-wechat-mini@1.0.6",
+    "name": "rn-wechat-mini",
+    "escapedName": "rn-wechat-mini",
+    "rawSpec": "1.0.6",
+    "saveSpec": null,
+    "fetchSpec": "1.0.6"
   },
-  "peerDependencies": {
-    "react-native": ">=0.40"
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/rn-wechat-mini/-/rn-wechat-mini-1.0.6.tgz",
+  "_spec": "1.0.6",
+  "_where": "/Users/liangfengsid/github/Shutong",
+  "author": {
+    "name": "Liang Feng",
+    "email": "liangfengsid@163.com"
   },
-  "author": "Liang Feng <liangfengsid@163.com>",
+  "bugs": {
+    "url": "https://github.com/liangfengsid/react-native-wechat/issues"
+  },
   "contributors": [
     {
       "name": "Yorkie Liu",
@@ -34,9 +44,30 @@
       "email": "tdzl2003@gmail.com"
     }
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/liangfengsid/react-native-wechat/issues"
+  "dependencies": {
+    "events": "1.0.2"
   },
-  "homepage": "https://github.com/liangfengsid/react-native-wechat#readme"
+  "description": "react-native library for wechat app",
+  "homepage": "https://github.com/liangfengsid/react-native-wechat#readme",
+  "keywords": [
+    "wechat",
+    "react",
+    "react-native",
+    "react-component",
+    "ios"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "rn-wechat-mini",
+  "peerDependencies": {
+    "react-native": ">=0.40"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/liangfengsid/react-native-wechat.git"
+  },
+  "scripts": {
+    "test": "echo 1"
+  },
+  "version": "2.0.0"
 }

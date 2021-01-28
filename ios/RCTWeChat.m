@@ -41,7 +41,7 @@ RCT_EXPORT_MODULE()
 {
     NSString * aURLString =  [aNotification userInfo][@"url"];
     NSURL * aURL = [NSURL URLWithString:aURLString];
-
+    
     if ([WXApi handleOpenURL:aURL delegate:self])
     {
         return YES;
@@ -62,8 +62,17 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(registerApp:(NSString *)appid :(NSString *)universalLink
                   :(RCTResponseSenderBlock)callback)
 {
+    //在register之前打开log, 后续可以根据log排查问题
+    [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString *log) {
+        NSLog(@"WeChatSDK: %@", log);
+    }];
     self.appId = appid;
     callback(@[[WXApi registerApp:appid universalLink:universalLink] ? [NSNull null] : INVOKE_FAILED]);
+    
+    //调用自检函数
+//    [WXApi checkUniversalLinkReady:^(WXULCheckStep step, WXCheckULStepResult* result) {
+//        NSLog(@"WeChatSDK: %@, %u, %@, %@", @(step), result.success, result.errorInfo, result.suggestion);
+//    }];
 }
 
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
@@ -277,7 +286,8 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
             NSString * fileExtension = aData[@"fileExtension"];
 
             WXFileObject *fileObject = [WXFileObject object];
-            fileObject.fileData = [NSData dataWithContentsOfFile:filePath];
+            NSURL *url = [NSURL URLWithString:filePath];
+            fileObject.fileData = [NSData dataWithContentsOfFile:[url path]];
             fileObject.fileExtension = fileExtension;
 
             [self shareToWeixinWithMediaMessage:aScene
@@ -375,6 +385,8 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     message.messageAction = action;
     message.mediaTagName = tagName;
     [message setThumbImage:thumbImage];
+    
+    NSLog(@"In shareToWeixinWithMediaMessage sendReq request, title:%@, description:%@, mediaObject:%@, messageExt:%@, messageAction:%@, mediaTagName:%@", title, description, mediaObject, messageExt, action, tagName);
 
     SendMessageToWXReq* req = [SendMessageToWXReq new];
     req.bText = NO;
@@ -382,6 +394,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     req.message = message;
 
     [WXApi sendReq:req completion:^(BOOL success) {
+        NSLog(@"In shareToWeixinWithMediaMessage sendReq response: %@", @(success));
         callback(@[success ? [NSNull null] : INVOKE_FAILED]);
     }];
 }
@@ -416,11 +429,11 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
 
 -(void) onReq:(BaseReq*)req
 {
-    // TODO(Yorkie)
 }
 
 -(void) onResp:(BaseResp*)resp
 {
+    NSLog(@"In RCTWeChat onResp resp: %@", resp);
 	if([resp isKindOfClass:[SendMessageToWXResp class]])
 	{
 	    SendMessageToWXResp *r = (SendMessageToWXResp *)resp;

@@ -10,6 +10,10 @@
 		10D6D7A71F160C250066F0F3 /* RCTWeChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10D6D7A61F160C250066F0F3 /* RCTWeChatTests.m */; };
 		10D6D7A91F160C250066F0F3 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D238421BD0BB9E00C75D01 /* libRCTWeChat.a */; };
 		10D6D7AF1F160C3A0066F0F3 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10D6D76D1F160B090066F0F3 /* libReact.a */; };
+		6A21E5C925B6BA4800A1514B /* RCTQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A21E5C825B6BA4800A1514B /* RCTQQ.m */; };
+		6A21E5CD25B6D0A700A1514B /* RCTDingding.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A21E5CC25B6D0A700A1514B /* RCTDingding.m */; };
+		6A37135125BED67B00C49064 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A37134F25BED67B00C49064 /* TencentOpenAPI.framework */; };
+		6A37135225BED67B00C49064 /* DTShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A37135025BED67B00C49064 /* DTShareKit.framework */; };
 		86D238561BD0BC1000C75D01 /* RCTWeChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D238551BD0BC1000C75D01 /* RCTWeChat.m */; };
 		86D2385D1BD0CA3D00C75D01 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D238571BD0BC2200C75D01 /* libWeChatSDK.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
@@ -125,6 +129,12 @@
 		10D6D7A41F160C250066F0F3 /* RCTWeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RCTWeChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10D6D7A61F160C250066F0F3 /* RCTWeChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTWeChatTests.m; sourceTree = "<group>"; };
 		10D6D7A81F160C250066F0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A21E5C825B6BA4800A1514B /* RCTQQ.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTQQ.m; sourceTree = SOURCE_ROOT; };
+		6A21E5CC25B6D0A700A1514B /* RCTDingding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTDingding.m; sourceTree = SOURCE_ROOT; };
+		6A21E5CE25B6D0EF00A1514B /* RCTQQ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTQQ.h; sourceTree = SOURCE_ROOT; };
+		6A21E5CF25B6D17F00A1514B /* RCTDingding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTDingding.h; sourceTree = SOURCE_ROOT; };
+		6A37134F25BED67B00C49064 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		6A37135025BED67B00C49064 /* DTShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DTShareKit.framework; sourceTree = "<group>"; };
 		86D238421BD0BB9E00C75D01 /* libRCTWeChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTWeChat.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		86D238541BD0BC1000C75D01 /* RCTWeChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTWeChat.h; sourceTree = SOURCE_ROOT; };
 		86D238551BD0BC1000C75D01 /* RCTWeChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTWeChat.m; sourceTree = SOURCE_ROOT; };
@@ -148,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				86D2385D1BD0CA3D00C75D01 /* libWeChatSDK.a in Frameworks */,
+				6A37135125BED67B00C49064 /* TencentOpenAPI.framework in Frameworks */,
+				6A37135225BED67B00C49064 /* DTShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +197,8 @@
 		86D238391BD0BB9E00C75D01 = {
 			isa = PBXGroup;
 			children = (
+				6A37135025BED67B00C49064 /* DTShareKit.framework */,
+				6A37134F25BED67B00C49064 /* TencentOpenAPI.framework */,
 				86D238571BD0BC2200C75D01 /* libWeChatSDK.a */,
 				86D238581BD0BC2200C75D01 /* WXApi.h */,
 				86D238591BD0BC2200C75D01 /* WXApiObject.h */,
@@ -208,7 +222,11 @@
 			isa = PBXGroup;
 			children = (
 				86D238541BD0BC1000C75D01 /* RCTWeChat.h */,
+				6A21E5CE25B6D0EF00A1514B /* RCTQQ.h */,
+				6A21E5CF25B6D17F00A1514B /* RCTDingding.h */,
 				86D238551BD0BC1000C75D01 /* RCTWeChat.m */,
+				6A21E5CC25B6D0A700A1514B /* RCTDingding.m */,
+				6A21E5C825B6BA4800A1514B /* RCTQQ.m */,
 			);
 			path = RCTWeChat;
 			sourceTree = "<group>";
@@ -406,6 +424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				86D238561BD0BC1000C75D01 /* RCTWeChat.m in Sources */,
+				6A21E5C925B6BA4800A1514B /* RCTQQ.m in Sources */,
+				6A21E5CD25B6D0A700A1514B /* RCTDingding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,10 +561,14 @@
 		86D2384C1BD0BB9E00C75D01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../React/**",
-					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../../react-native/**",
+					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image/**",
 				);
@@ -555,6 +579,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"-fobjc-arc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -564,10 +589,14 @@
 		86D2384D1BD0BB9E00C75D01 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../React/**",
-					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../../react-native/**",
+					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image/**",
 				);
@@ -578,6 +607,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"-fobjc-arc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
