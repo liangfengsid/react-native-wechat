@@ -48,7 +48,10 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -399,7 +402,6 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         if (data.hasKey("messageExt")) {
             message.messageExt = data.getString("messageExt");
         }
-
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = message;
         req.scene = scene;
@@ -534,7 +536,17 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         if (!data.hasKey("filePath")) {
             return null;
         }
-        return new WXFileObject(data.getString("filePath"));
+        String filePath = data.getString("filePath");
+        WXFileObject obj = new WXFileObject(filePath);
+        try {
+            byte[] bytes = FileUtils.readFileToByteArray(new File(filePath));
+            Log.i(TAG, "WXFileObject length: "+bytes.length+",bytes:"+new String(bytes));
+            obj.setFileData(bytes);
+            return obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     // TODO: 实现sendRequest、sendSuccessResponse、sendErrorCommonResponse、sendErrorUserCancelResponse
